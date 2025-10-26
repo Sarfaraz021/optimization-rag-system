@@ -1,19 +1,23 @@
 import os
+import sys
 from typing import Annotated
 from dotenv import load_dotenv
+
+# Add parent directory to path
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 from langchain_core.tools import tool
-# from langgraph.prebuilt import create_react_agent
-from langchain.agents import create_agent
-import prompt
+from langchain_openai import ChatOpenAI
+from langgraph.prebuilt import create_react_agent
 from retrieval_pipeline import RetrievalPipeline
 from prompt import rag_prompt
 
 load_dotenv()
 
-# Initialize retrieval pipeline
+# Initialize retrieval pipeline - EXACT copy from your agent_orchestrator.py
 retrieval_pipeline = RetrievalPipeline()
 
-
+# EXACT copy of your tool from agent_orchestrator.py
 @tool
 def retrieve_cloud_optimization_info(query: Annotated[str, "The cloud cost optimization question"]) -> str:
     """
@@ -37,44 +41,20 @@ def retrieve_cloud_optimization_info(query: Annotated[str, "The cloud cost optim
     
     return "\n\n".join(context_parts)
 
+# Use gpt-4o-mini instead of gpt-4.1 (which doesn't exist)
+model = ChatOpenAI(
+    model="gpt-4.1",
+    temperature=0,
+    openai_api_key=os.getenv('OPENAI_API_KEY')
+)
 
-def create_agent():
-    """Create ReAct agent with retrieval tool."""
-    
-    agent = create_agent(
-        model="gpt-4.1",
-        tools=[retrieve_cloud_optimization_info],
-        prompt=rag_prompt.format()
-    )
-    
-    return agent
+# Create the LangGraph agent - equivalent to your create_agent() function
+graph = create_react_agent(
+    model=model,
+    tools=[retrieve_cloud_optimization_info],
+    prompt=rag_prompt.format()
+)
 
-
-def query_agent(user_query: str):
-    """Query the agent and return response."""
-    agent = create_agent()
-    
-    response = agent.invoke({
-        "messages": [{"role": "user", "content": user_query}]
-    })
-    
-    return response["messages"][-1].content
-
-
-if __name__ == "__main__":
-    print("\n" + "=" * 60)
-    print("AGENT ORCHESTRATOR DEMO")
-    print("=" * 60 + "\n")
-    
-    test_queries = [
-        "How do I reduce S3 storage costs?",
-        "What are Azure Spot VM savings?",
-        "Hello, how are you?",
-    ]
-    
-    for query in test_queries:
-        print(f"\nQuery: {query}")
-        print("-" * 60)
-        
-        answer = query_agent(query)
-        print(f"Answer: {answer[:300]}...")
+# Add metadata for LangSmith
+graph.name = "Cloud Cost Optimization Agent"
+graph.description = "A ReAct agent that helps users optimize cloud costs using a comprehensive RAG pipeline"

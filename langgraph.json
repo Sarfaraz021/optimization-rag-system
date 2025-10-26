@@ -1,0 +1,37 @@
+{
+  "dependencies": [
+    "./src",
+    "langchain==0.3.27",
+    "langchain-anthropic==0.3.17",
+    "langchain-community==0.3.27",
+    "langchain-core==0.3.76",
+    "langchain-openai==0.3.27",
+    "langchain-text-splitters==0.3.11",
+    "langgraph==0.6.7",
+    "langgraph-api==0.4.28",
+    "langgraph-checkpoint==2.1.0",
+    "langgraph-checkpoint-postgres==2.0.22",
+    "langgraph-cli==0.3.4",
+    "langgraph-prebuilt==0.6.4",
+    "langgraph-runtime-inmem==0.14.1",
+    "langgraph-sdk==0.2.9",
+    "langsmith==0.4.5",
+    "anthropic==0.57.1",
+    "openai==1.95.1",
+    "python-dotenv==1.1.1",
+    "sentence-transformers==5.1.2",
+    "langchain-postgres==0.0.16",
+    "psycopg==3.2.12",
+    "beautifulsoup4==4.14.2",
+    "requests==2.32.5",
+    "tqdm==4.67.1",
+    "pydantic==2.12.3",
+    "fastapi==0.120.0",
+    "uvicorn==0.38.0"
+  ],
+  "graphs": {
+    "optimization_agent": "./src/graph.py:graph"
+  },
+  "env": ".env",
+  "python_version": "3.11"
+}

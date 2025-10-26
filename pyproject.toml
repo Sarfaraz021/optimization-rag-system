@@ -1,0 +1,78 @@
+[project]
+name = "optimization-rag-system"
+version = "0.1.0"
+description = "LangGraph-based RAG agent for cloud cost optimization with retrieval and reranking"
+authors = [{name = "Sarfaraz Ahmed", email = "safiibhai74@gmail.com"}]
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "annotated-types==0.7.0",
+    "anthropic==0.57.1",
+    "anyio==4.9.0",
+    "beautifulsoup4==4.14.2",
+    "fastapi==0.120.0",
+    "langchain==0.3.27",
+    "langchain-anthropic==0.3.17",
+    "langchain-community==0.3.27",
+    "langchain-core==0.3.76",
+    "langchain-openai==0.3.27",
+    "langchain-postgres==0.0.16",
+    "langchain-text-splitters==0.3.11",
+    "langgraph==0.6.7",
+    "langgraph-api==0.4.28",
+    "langgraph-checkpoint==2.1.0",
+    "langgraph-checkpoint-postgres==2.0.22",
+    "langgraph-cli==0.3.4",
+    "langgraph-prebuilt==0.6.4",
+    "langgraph-runtime-inmem==0.14.1",
+    "langgraph-sdk==0.2.9",
+    "langsmith==0.4.5",
+    "networkx==3.5",
+    "numpy==2.3.4",
+    "openai==1.95.1",
+    "psycopg==3.2.12",
+    "psycopg-binary==3.2.12",
+    "pydantic==2.12.3",
+    "python-dateutil==2.9.0.post0",
+    "python-dotenv==1.1.1",
+    "requests==2.32.5",
+    "sentence-transformers==5.1.2",
+    "tiktoken==0.12.0",
+    "tqdm==4.67.1",
+    "uvicorn==0.38.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.3.3",
+    "pytest-asyncio==1.1.0",
+    "black>=24.10.0",
+    "ruff>=0.7.3",
+    "mypy>=1.13.0",
+]
+
+[build-system]
+requires = ["setuptools>=75.0.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["src*"]
+
+[tool.black]
+line-length = 100
+target-version = ["py311"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.mypy]
+python_version = "3.11"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = false
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
