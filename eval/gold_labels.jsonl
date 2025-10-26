@@ -1,0 +1,7 @@
+{"query": "Reduce Azure Blob storage cost with lifecycle policies", "relevant_docs": ["azure_blob_lifecycle_001", "azure_storage_optimization_002"], "expected_answer": "Use Azure Blob Storage lifecycle policies to automatically transition data to cooler tiers"}
+{"query": "Save money using AWS S3 Intelligent Tiering", "relevant_docs": ["aws_s3_intelligent_tiering_001", "aws_s3_cost_optimization_003"], "expected_answer": "AWS S3 Intelligent Tiering automatically moves objects between access tiers to optimize costs"}
+{"query": "What are Azure Spot VM savings compared to pay-as-you-go?", "relevant_docs": ["azure_spot_vm_001", "azure_compute_pricing_002"], "expected_answer": "Azure Spot VMs can provide up to 90% cost savings compared to pay-as-you-go pricing"}
+{"query": "Optimize Google BigQuery storage cost", "relevant_docs": ["gcp_bigquery_optimization_001", "gcp_storage_best_practices_002"], "expected_answer": "Use BigQuery storage optimization techniques like partitioning, clustering, and data lifecycle management"}
+{"query": "Give rightsizing recommendations for EC2 compute", "relevant_docs": ["aws_ec2_rightsizing_001", "aws_compute_optimization_002"], "expected_answer": "Use AWS Compute Optimizer and CloudWatch metrics to identify underutilized instances and rightsize them"}
+
+
