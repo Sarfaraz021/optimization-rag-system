@@ -42,7 +42,7 @@ logs/
 # Database
 *.db
 *.sqlite3
-data/ingestion_stats.json
+# data/ingestion_stats.json
 
 # IDE
 .vscode/
