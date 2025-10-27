@@ -58,14 +58,15 @@ optimization-rag-system/
 ### Prerequisites
 
 - Python 3.8+
-- PostgreSQL with pgvector extension
+- Docker (for running pgvector/PostgreSQL container)
 - OpenAI API key
+- LangSmith API key (optional, for agent testing in UI)
 
 ### Installation
 
 1. **Clone the repository**
    ```bash
-   git clone <repository-url>
+   git clone <https://github.com/Sarfaraz021/optimization-rag-system>
    cd optimization-rag-system
    ```
 
@@ -80,16 +81,57 @@ optimization-rag-system/
    pip install -r requirements.txt
    ```
 
-4. **Setup database**
+4. **Setup PGVector Database**
+
+   ### Step-by-Step Setup
+
+   **Step 1: Open Terminal**
+   Open your Mac Terminal app
+
+   **Step 2: Check if Container Exists**
    ```bash
-   # Start PostgreSQL with pgvector
-   docker run -d --name pgvector \
-     -e POSTGRES_DB=langchain \
+   docker ps -a | grep pgvector
+   ```
+   If you see a container, go to Step 3. If not, go to Step 4.
+
+   **Step 3: If Container Exists (Start It)**
+   ```bash
+   docker start pgvector-container
+   ```
+   Wait 5 seconds, then verify it's running:
+   ```bash
+   docker ps
+   ```
+   You should see `pgvector-container` with status "Up".
+   ✅ Skip to Step 5 to test connection
+
+   **Step 4: If Container Doesn't Exist (Create It)**
+   ```bash
+   docker run --name pgvector-container \
      -e POSTGRES_USER=langchain \
      -e POSTGRES_PASSWORD=langchain \
+     -e POSTGRES_DB=langchain \
      -p 6024:5432 \
-     pgvector/pgvector:pg16
+     -d pgvector/pgvector:pg16
    ```
+   Wait 10 seconds for it to fully start, then check:
+   ```bash
+   docker ps
+   ```
+   You should see `pgvector-container` running!
+
+   **Step 5: Test the Connection**
+   ```bash
+   docker exec -it pgvector-container psql -U langchain -d langchain
+   ```
+   If successful, you'll see:
+   ```
+   psql (16.x)
+   Type "help" for help.
+
+   langchain=#
+   ```
+   Type `\q` to exit.
 
 5. **Configure environment**
    ```bash
@@ -108,6 +150,59 @@ optimization-rag-system/
    python app/main.py
    # API available at http://localhost:8000
    ```
+
+## 🤖 **Alternative: Test Agent in LangSmith UI**
+
+If you want to test the agent directly in LangSmith's interactive UI:
+
+### **Setup for LangSmith**
+
+1. **Get LangSmith API Key**
+   - Sign up at [smith.langchain.com](https://smith.langchain.com)
+   - Get your API key from Settings > API Keys
+
+2. **Configure Environment**
+   ```bash
+   # Add to your .env file
+   LANGSMITH_API_KEY=your_langsmith_api_key_here
+   LANGCHAIN_TRACING_V2=true
+   LANGCHAIN_PROJECT=optimization-rag-system
+   ```
+
+3. **Install LangGraph CLI**
+   ```bash
+   pip install langgraph-cli
+   ```
+
+4. **Install Project in Editable Mode**
+   ```bash
+   pip install -e .
+   ```
+   This allows LangGraph to import your project modules.
+
+5. **Start LangGraph Development Server**
+   ```bash
+   langgraph dev
+   ```
+   
+   This will:
+   - Start the agent server locally
+   - Open LangSmith UI in your browser
+   - Allow interactive testing of your agent
+
+6. **Test in Browser**
+   - Navigate to the LangSmith UI (opens automatically)
+   - Find your "Cloud Cost Optimization Agent"
+   - Test queries like:
+     - "How to reduce AWS S3 storage costs?"
+     - "What are Azure Spot VM savings?"
+     - "Optimize Google BigQuery costs"
+
+### **Benefits of LangSmith UI Testing**
+- **Interactive chat interface** - test like ChatGPT
+- **Real-time tracing** - see exactly how your agent works
+- **Performance monitoring** - track response times and token usage
+- **Debug tools** - inspect retrieval results and reasoning steps
 
 ## 📊 Usage
 
@@ -170,40 +265,9 @@ The system includes comprehensive evaluation metrics:
 
 Run evaluation using the RetrievalEvaluator class in `retrieval_pipeline.py`. View results in `retrieval_eval.md`.
 
-## 🎁 Bonus Features
-
 ### Agent Orchestration (Part D)
-- Contextual memory for multi-turn conversations
+- minimal agent integrated with rag pipline
 - Query routing and refinement
-- Enable with `AGENT_ENABLED=true`
-
-### LLM Evaluation (Part E)  
-- Advanced evaluation using DeepEval/RAGAS
-- Relevance and citation quality metrics
-- Latency and performance monitoring
-
-## 🧪 Testing
-
-```bash
-# Run all tests
-pytest
-
-# Run with coverage
-pytest --cov=app --cov=retrieval_pipeline
-
-# Run specific test file
-pytest tests/test_retrieval.py
-```
-
-## 📚 Data Sources
-
-The system ingests from trusted sources:
-
-- **AWS Well-Architected Framework** - Cost Optimization Pillar
-- **Azure Cost Management** - Official documentation
-- **Google Cloud Cost Optimization** - Best practices guide
-- **FinOps Foundation** - Community resources
-- **Cloud Provider Blogs** - Latest optimization techniques
 
 ## 🔍 System Statistics
 
@@ -214,33 +278,3 @@ curl http://localhost:8000/stats
 ```
 
 Returns database size, embedding model info, and provider breakdown.
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests
-5. Submit a pull request
-
-## 📄 License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## 🆘 Support
-
-For questions or issues:
-
-1. Check the documentation in `docs/`
-2. Review `DEPLOYMENT.md` for deployment issues
-3. Open an issue on GitHub
-4. Check the evaluation reports for performance insights
-
-## 🔄 Development Roadmap
-
-- [ ] Advanced chunking strategies
-- [ ] Multi-modal support (images, diagrams)
-- [ ] Real-time data source updates
-- [ ] Advanced agent capabilities
-- [ ] Integration with cloud cost APIs
-- [ ] Custom embedding fine-tuning

@@ -1,10 +1,10 @@
-# /Users/sarfarazahmed/Desktop/optimization-rag-system/retrieval_pipeline.py
 import os
 from typing import List, Dict
 from dotenv import load_dotenv
 from langchain_openai import OpenAIEmbeddings
 from langchain_postgres import PGVector
 from sentence_transformers import CrossEncoder
+from langsmith import traceable
 import numpy as np
 
 load_dotenv()
@@ -42,6 +42,7 @@ class RetrievalPipeline:
         
         print("Pipeline initialized successfully.\n")
     
+    @traceable(name="semantic_search")
     def semantic_search(self, query: str, k: int = 20) -> List[Dict]:
         """
         Stage 1: Retrieve candidate documents using semantic similarity.
@@ -65,6 +66,7 @@ class RetrievalPipeline:
         
         return candidates
     
+    @traceable(name="rerank")
     def rerank(self, query: str, candidates: List[Dict], top_k: int = 5) -> List[Dict]:
         """
         Stage 2: Rerank candidates using cross-encoder model.
@@ -86,6 +88,7 @@ class RetrievalPipeline:
         reranked = sorted(candidates, key=lambda x: x['rerank_score'], reverse=True)
         return reranked[:top_k]
     
+    @traceable(name="retrieve")
     def retrieve(self, query: str, top_k: int = 5, use_reranking: bool = True) -> List[Dict]:
         """
         Execute full retrieval pipeline.
@@ -112,6 +115,7 @@ class RetrievalEvaluator:
     def __init__(self, pipeline: RetrievalPipeline):
         self.pipeline = pipeline
     
+    @traceable(name="recall_at_k")
     def recall_at_k(self, query: str, relevant_doc_ids: List[str], k: int = 5) -> float:
         """
         Calculate Recall@K: proportion of relevant documents retrieved in top-k results.
@@ -132,6 +136,7 @@ class RetrievalEvaluator:
         
         return relevant_retrieved / total_relevant if total_relevant > 0 else 0.0
     
+    @traceable(name="mean_reciprocal_rank")
     def mean_reciprocal_rank(self, query: str, relevant_doc_ids: List[str]) -> float:
         """
         Calculate MRR: reciprocal of rank position of first relevant document.

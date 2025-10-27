@@ -72,17 +72,9 @@ The system was evaluated using the following sample queries that represent real-
 
 ## Recommendations
 
-### Short-term Improvements
-- **Optimize Query Speed**: Implement caching for embeddings and optimize vector search parameters
-- **Improve Top-1 Accuracy**: Fine-tune chunking strategy and consider domain-specific embedding models
-- **Add Query Preprocessing**: Implement query expansion and normalization to improve matching
-- **Performance Monitoring**: Add detailed timing metrics to identify bottlenecks
-
 ### Long-term Enhancements  
 - **Hybrid Search**: Combine semantic search with keyword matching for better precision
 - **Advanced Reranking**: Experiment with domain-specific reranking models or ensemble approaches
-- **Dynamic Source Weighting**: Implement source quality scoring based on user feedback
-- **Multi-modal Support**: Add support for diagrams and cost calculators from documentation
 
 ## Conclusion
 
@@ -91,9 +83,6 @@ The expanded dataset from 10 to 24 sources has significantly improved system per
 - **Better provider balance** with comprehensive coverage across AWS, Azure, and GCP
 - **Effective reranking** showing 30% average improvement
 - **Perfect MRR** indicates relevant results are consistently found
-
-However, **query speed (1.9s) and Recall@1 (33.4%) remain critical issues** requiring immediate attention before production deployment. The system shows strong potential with proper optimization.
-
 ---
 *Report generated on: October 26, 2025*  
 *Evaluation dataset: eval/gold_labels.jsonl*  
