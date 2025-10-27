@@ -160,14 +160,6 @@ sources:
     priority: 2
     description: "Google Cloud SQL cost optimization strategies"
     
-  # Third-party and Community Sources
-  - name: "FinOps Foundation Best Practices"
-    url: "https://www.finops.org/introduction/what-is-finops/"
-    type: "documentation"
-    provider: "FinOps"
-    priority: 2
-    description: "FinOps framework and cloud cost management best practices"
-    
   - name: "Cloud Cost Optimization Guide - Cloudability"
     url: "https://www.cloudability.com/blog/cloud-cost-optimization/"
     type: "blog"

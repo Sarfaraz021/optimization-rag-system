@@ -1,17 +1,16 @@
 {
-  "total_sources": 24,
-  "total_documents_scraped": 22,
-  "total_chunks": 299,
+  "total_sources": 23,
+  "total_documents_scraped": 21,
+  "total_chunks": 294,
   "embedding_model": "text-embedding-3-small",
   "embedding_dimensions": 1536,
   "chunk_size_config": 400,
   "chunk_overlap": 50,
-  "avg_chunk_size_chars": 1505,
+  "avg_chunk_size_chars": 1506,
   "provider_breakdown": {
     "AWS": 93,
     "Azure": 78,
-    "GCP": 123,
-    "FinOps": 5
+    "GCP": 123
   },
   "vector_db": "pgvector",
   "collection_name": "cloud_cost_optimization"
