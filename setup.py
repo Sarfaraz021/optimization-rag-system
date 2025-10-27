@@ -37,6 +37,8 @@ setup(
         "pgvector==0.3.6",
         "prompt_toolkit==3.0.52",
         "pydantic==2.12.3",
+        "langgraph-cli==0.4.4",
+        "langgraph-api==0.4.46",
         "pydantic-settings==2.11.0",
         "pydantic_core==2.41.4",
         "python-dotenv==1.1.1",

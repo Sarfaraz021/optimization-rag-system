@@ -8,6 +8,8 @@
     "huggingface-hub==0.36.0",
     "langchain==1.0.2",
     "langchain-core==1.0.1",
+    "langgraph-cli==0.4.4",
+    "langgraph-api==0.4.46",
     "langchain-openai==1.0.1",
     "langchain-postgres==0.0.16",
     "langchain-text-splitters==1.0.0",
