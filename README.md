@@ -61,10 +61,34 @@ optimization-rag-system/
 
 ### Prerequisites
 
-- Python 3.8+
+- **Python 3.11+** (Required for latest LangChain packages)
 - Docker (for running pgvector/PostgreSQL container)
 - OpenAI API key
 - LangSmith API key (optional, for agent testing in UI)
+
+### Python Version Troubleshooting
+
+If you encounter dependency errors like `ipython==9.6.0` not found:
+
+**Check your Python version:**
+```bash
+python --version
+```
+
+**If using Python 3.10.x, upgrade to 3.11+:**
+```bash
+# Using pyenv (recommended):
+pyenv install 3.11.9
+pyenv local 3.11.9
+
+# Or download from python.org and reinstall
+```
+
+**Alternative for Python 3.10 users:**
+```bash
+# Use Python 3.10 compatible dependencies:
+pip install -r requirements-py310.txt
+```
 
 ### Installation
 
