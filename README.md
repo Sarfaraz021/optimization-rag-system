@@ -137,6 +137,82 @@ optimization-rag-system/
    ```
    Type `\q` to exit.
 
+   ### Windows Setup Alternative
+
+   **For Windows Users:**
+
+   **Step 1: Install Docker Desktop**
+   - Download from: https://www.docker.com/products/docker-desktop/
+   - Run `Docker Desktop Installer.exe` and follow the wizard
+   - Enable WSL 2 when prompted
+   - Start Docker Desktop (whale icon in system tray)
+
+   **Step 2: Open Command Prompt or PowerShell**
+   Press `Win + R`, type `cmd` or `powershell`, press Enter
+
+   **Step 3: Check if Container Exists**
+   ```cmd
+   docker ps -a | findstr pgvector
+   ```
+   If you see a container, go to Step 4. If not, go to Step 5.
+
+   **Step 4: If Container Exists (Start It)**
+   ```cmd
+   docker start pgvector-container
+   ```
+   Wait 5 seconds, then verify it's running:
+   ```cmd
+   docker ps
+   ```
+   You should see `pgvector-container` with status "Up".
+   ✅ Skip to Step 6 to test connection
+
+   **Step 5: If Container Doesn't Exist (Create It)**
+   
+   **Using Command Prompt:**
+   ```cmd
+   docker run --name pgvector-container ^
+     -e POSTGRES_USER=langchain ^
+     -e POSTGRES_PASSWORD=langchain ^
+     -e POSTGRES_DB=langchain ^
+     -p 6024:5432 ^
+     -d pgvector/pgvector:pg16
+   ```
+
+   **Using PowerShell:**
+   ```powershell
+   docker run --name pgvector-container `
+     -e POSTGRES_USER=langchain `
+     -e POSTGRES_PASSWORD=langchain `
+     -e POSTGRES_DB=langchain `
+     -p 6024:5432 `
+     -d pgvector/pgvector:pg16
+   ```
+
+   Wait 10 seconds for it to fully start, then check:
+   ```cmd
+   docker ps
+   ```
+   You should see `pgvector-container` running!
+
+   **Step 6: Test the Connection**
+   ```cmd
+   docker exec -it pgvector-container psql -U langchain -d langchain
+   ```
+   If successful, you'll see:
+   ```
+   psql (16.x)
+   Type "help" for help.
+
+   langchain=#
+   ```
+   Type `\q` to exit.
+
+   **Windows Troubleshooting:**
+   - If Docker commands don't work: Restart Command Prompt as Administrator
+   - If Docker Desktop won't start: Enable WSL 2 with `wsl --install`
+   - Make sure Docker Desktop is running (whale icon in system tray)
+
 5. **Configure environment**
    ```bash
    cp env.example .env
