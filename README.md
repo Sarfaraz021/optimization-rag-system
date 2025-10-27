@@ -33,19 +33,23 @@ This system helps users retrieve cloud cost optimization techniques using natura
 ```
 optimization-rag-system/
 ├── app/                          # FastAPI application
-│   ├── __init__.py
 │   └── main.py                   # Main API server
+├── src/                          # LangGraph agent source
+│   ├── __init__.py
+│   └── graph.py                  # LangGraph agent for LangSmith
 ├── data/                         # Data configuration and sources
-│   └── sources.yaml              # Data sources configuration
+│   ├── sources.yaml              # Data sources configuration
+│   └── ingestion_stats.json      # Ingestion statistics
 ├── eval/                         # Evaluation framework
 │   ├── gold_labels.jsonl         # Test queries with ground truth
-│   └── llm_eval_report.md        # LLM evaluation report (bonus)
-├── tests/                        # Test suite
-├── docs/                         # Additional documentation
 ├── build_vector_db.ipynb         # Data ingestion notebook
 ├── retrieval_pipeline.py         # Retrieval and reranking logic
 ├── retrieval_eval.md             # Retrieval evaluation report
 ├── agent_orchestrator.py         # Agent orchestration (bonus)
+├── prompt.py                     # RAG prompt configuration
+├── langgraph.json                # LangGraph configuration
+├── pyproject.toml                # Python project configuration
+├── setup.py                      # Package setup file
 ├── requirements.txt              # Python dependencies
 ├── env.example                   # Environment configuration template
 ├── README.md                     # This file
