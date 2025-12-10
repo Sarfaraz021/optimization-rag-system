@@ -1,4 +1,4 @@
-# Create a LANGSMITH_API_KEY in Settings > API Keys
+# Create a LANGSMITH_API_KEY in Settings >  API Keys
 import os
 from dotenv import load_dotenv
 from langsmith import Client
